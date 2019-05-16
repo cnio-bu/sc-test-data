@@ -1,0 +1,20 @@
+#chromosome for which to get ref and read data
+chrom: 19
+
+#sampling factor to apply to the sample bams
+sampling_factor: .001
+
+samples:
+    heart: 
+        bam: http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/heart_10k_v3_star.bam
+        fastqs:
+            - http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/heart_10k_v3_S1_L001_R1_001.fastq.gz
+            - http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/heart_10k_v3_S1_L002_R1_001.fastq.gz
+    brain: 
+        bam: http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/brain_10k_v3_star.bam
+        fastqs:
+            - http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/neuron_10k_v3_S1_L001_R1_001.fastq.gz
+            - http://bioinformatics.cnio.es/data/pipelines/single_cell/10x_sample_data/neuron_10k_v3_S1_L002_R1_001.fastq.gz
+ref:
+    annotation: ftp://ftp.ensembl.org/pub/release-96/gtf/mus_musculus/Mus_musculus.GRCm38.96.gtf.gz
+    genome: ftp://ftp.ensembl.org/pub/release-96/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna_sm.chromosome.{chrom}.fa.gz
