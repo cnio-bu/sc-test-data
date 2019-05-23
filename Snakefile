@@ -10,7 +10,7 @@ rule all:
     input:
         expand(["ref/annotation.chr{chrom}.gtf",
                 "ref/genome.chr{chrom}.fa"], chrom=config["chrom"]),
-        expand("reads/{sample}.chr{chrom}.{group}.fastq", 
+        expand("reads/{sample}.chr{chrom}.r{group}.fastq", 
                group=[1, 2], sample=config["samples"], chrom=config["chrom"])
 
 rule annotation:
@@ -31,7 +31,7 @@ rule genome:
 
 rule sample_bam:
     output:
-        temp("reads/{sample}.chr{chrom}.2.bam")
+        temp("reads/{sample}.chr{chrom}.r2.bam")
     params:
         url=lambda wc: config["samples"][wc.sample]["bam"],
         seed=lambda wc: abs(hash(wc.sample)) % 10000
@@ -42,9 +42,9 @@ rule sample_bam:
 
 rule sample_bam_index:
     input:
-        "reads/{sample}.chr{chrom}.2.bam"
+        "reads/{sample}.chr{chrom}.r2.bam"
     output:
-        temp("reads/{sample}.chr{chrom}.2.bam.bai")
+        temp("reads/{sample}.chr{chrom}.r2.bam.bai")
     params:
         url=lambda wc: config["samples"][wc.sample]["bam"],
         seed=lambda wc: abs(hash(wc.sample)) % 10000
@@ -55,12 +55,12 @@ rule sample_bam_index:
 
 rule gen_fastqs:
     input:
-        bam="reads/{sample}.chr{chrom}.2.bam",
-        bai="reads/{sample}.chr{chrom}.2.bam.bai",
+        bam="reads/{sample}.chr{chrom}.r2.bam",
+        bai="reads/{sample}.chr{chrom}.r2.bam.bai",
         fastqs=lambda wc: HTTP.remote(config["samples"][wc.sample]["fastqs"], static=True, keep_local=True)
     output:
-        r1="reads/{sample}.chr{chrom}.1.fastq",
-        r2="reads/{sample}.chr{chrom}.2.fastq"
+        r1="reads/{sample}.chr{chrom}.r1.fastq",
+        r2="reads/{sample}.chr{chrom}.r2.fastq"
     conda:
         "envs/fastqs.yaml"
     script:
