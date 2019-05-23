@@ -7,7 +7,7 @@ fastq_fnames = snakemake.input.fastqs
 
 bamfile = pysam.AlignmentFile(bam_fname, "rb")
 
-bam_reads = {read.query_name:read for read in bamfile.fetch(snakemake.wildcards.chrom)}
+bam_reads = {read.query_name:read for read in bamfile.fetch("chr"+snakemake.wildcards.chrom)}
 bam_readnames = set(bam_reads)
 
 bamfile.close()
