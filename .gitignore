@@ -19,5 +19,5 @@ scripts/.snakemake*
 !.gitignore
 !.gitattributes
 !.editorconfig
-!.travis.yml
 !.test
+!.gitlab-ci.yml
