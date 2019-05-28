@@ -26,5 +26,5 @@ with open(snakemake.output.r1,"w") as ofh1:
         for n in bam_readnames:
             fastq_read = fastq_reads[n]
             bam_read = bam_reads[n]
-            ofh1.write(">%s\n%s\n+\n%s\n"  % (fastq_read.name.split()[0], fastq_read.sequence, fastq_read.qualities))
-            ofh2.write(">%s\n%s\n+\n%s\n"  % (bam_read.query_name, bam_read.query_sequence, "".join([chr(x + 33) for x in bam_read.query_qualities])))
+            ofh1.write("@%s\n%s\n+\n%s\n"  % (fastq_read.name.split()[0], fastq_read.sequence, fastq_read.qualities))
+            ofh2.write("@%s\n%s\n+\n%s\n"  % (bam_read.query_name, bam_read.query_sequence, "".join([chr(x + 33) for x in bam_read.query_qualities])))
