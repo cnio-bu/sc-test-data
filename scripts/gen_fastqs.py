@@ -1,6 +1,7 @@
 import pysam
 import sys
 import dnaio
+import gzip
 
 bam_fname = snakemake.input.bam
 fastq_fnames = snakemake.input.fastqs
@@ -21,10 +22,10 @@ for fname in fastq_fnames:
             if name in bam_readnames:
                 fastq_reads[name] = record
 
-with open(snakemake.output.r1,"w") as ofh1:
-    with open(snakemake.output.r2,"w") as ofh2:
+with gzip.open(snakemake.output.r1,"w") as ofh1:
+    with gzip.open(snakemake.output.r2,"w") as ofh2:
         for n in bam_readnames:
             fastq_read = fastq_reads[n]
             bam_read = bam_reads[n]
-            ofh1.write("@%s\n%s\n+\n%s\n"  % (fastq_read.name.split()[0], fastq_read.sequence, fastq_read.qualities))
-            ofh2.write("@%s\n%s\n+\n%s\n"  % (bam_read.query_name, bam_read.query_sequence, "".join([chr(x + 33) for x in bam_read.query_qualities])))
+            ofh1.write("@{}\n{}\n+\n{}\n".format(fastq_read.name.split()[0], fastq_read.sequence, fastq_read.qualities).encode())
+            ofh2.write("@{}\n{}\n+\n{}\n".format(bam_read.query_name, bam_read.query_sequence, "".join([chr(x + 33) for x in bam_read.query_qualities])).encode())
