@@ -23,3 +23,5 @@ scripts/.snakemake*
 !.gitlab-ci.yml
 !reads
 !reads/*
+!ref
+!ref/captured_regions.bed
