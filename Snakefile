@@ -19,7 +19,7 @@ rule annotation:
     output:
         "ref/annotation.chr{chrom}.gtf"
     shell:
-        "zgrep -P ^{wildcards.chrom} {input} > {output}"
+        "zgrep -e ^{wildcards.chrom} {input} > {output}"
 
 rule genome:
     input:
